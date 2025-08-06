@@ -23,15 +23,15 @@ ALLOWED_HOSTS = [
     '.onrender.com',  # Allow all Render.com subdomains
 ]
 
-# Database - Use PostgreSQL in production
+# Database - Use PostgreSQL if available, fallback to SQLite
 try:
     import dj_database_url
 except ImportError:
     dj_database_url = None
 
-# Try DATABASE_URL first (easier), fallback to individual variables
+# Try DATABASE_URL first (PostgreSQL), fallback to SQLite
 DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
+if DATABASE_URL and dj_database_url:
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
@@ -40,17 +40,11 @@ if DATABASE_URL:
         )
     }
 else:
+    # Fallback to SQLite for quick deployment
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('PGDATABASE'),
-            'USER': os.environ.get('PGUSER'),
-            'PASSWORD': os.environ.get('PGPASSWORD'),
-            'HOST': os.environ.get('PGHOST'),
-            'PORT': os.environ.get('PGPORT', '5432'),
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
