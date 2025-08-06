@@ -150,7 +150,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-⭐ **Star this repository if you found it helpful!**
+⭐ ****
 =======
 # SkillStream-Django-application
 >>>>>>> 5fc83545a145f7257d98a972d83902abfcf1ec68
