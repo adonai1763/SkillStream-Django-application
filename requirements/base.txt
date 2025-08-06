@@ -6,7 +6,8 @@ Django>=4.2,<5.0
 Pillow>=10.0.0  # For image processing
 
 # Database
-psycopg2-binary>=2.9.0  # PostgreSQL adapter
+psycopg2-binary>=2.9.0
+dj-database-url>=2.0.0  # PostgreSQL adapter
 
 # Static file serving
 whitenoise>=6.5.0

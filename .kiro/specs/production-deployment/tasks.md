@@ -12,7 +12,7 @@
   - Set up database configuration with dj-database-url for Heroku PostgreSQL
   - _Requirements: 2.1, 2.2, 2.5_
 
-- [-] 1.2 Configure environment variables and secrets
+- [x] 1.2 Configure environment variables and secrets
   - Generate secure SECRET_KEY for production use
   - Create comprehensive list of required environment variables
   - Set up environment variable validation and error handling
@@ -60,7 +60,7 @@
   - Set up Heroku CLI and authentication for deployment
   - _Requirements: 1.1, 1.4_
 
-- [ ] 3.2 Add and configure Heroku addons
+- [-] 3.2 Add and configure Heroku addons
   - Add Heroku Postgres addon for production database
   - Add Heroku Redis addon for caching (optional but recommended)
   - Configure addon settings and connection parameters
