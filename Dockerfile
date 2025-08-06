@@ -27,6 +27,9 @@ COPY . /app/
 # Create necessary directories
 RUN mkdir -p /app/staticfiles /app/media
 
+# Make startup script executable (before switching users)
+RUN chmod +x /app/start.sh
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
@@ -39,4 +42,4 @@ USER appuser
 EXPOSE $PORT
 
 # Start command
-CMD python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+CMD ["/app/start.sh"]
