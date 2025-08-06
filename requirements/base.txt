@@ -1,0 +1,24 @@
+# Base requirements for SkillStream project
+# These are the core dependencies needed in all environments
+
+# Django and core web framework
+Django>=4.2,<5.0
+Pillow>=10.0.0  # For image processing
+
+# Database
+psycopg2-binary>=2.9.0  # PostgreSQL adapter
+
+# Static file serving
+whitenoise>=6.5.0
+
+# Environment variable management
+python-decouple>=3.8
+
+# Timezone support
+pytz>=2023.3
+
+# URL manipulation
+urllib3>=2.0.0
+
+# Security
+cryptography>=41.0.0

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ video.title }}</h1>
+
+
+<!-- 🎬 Video Player -->
+<video width="100%" height="auto" controls>
+  <source src="{{ video.video_file.url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<!-- 👤 Creator Info -->
+<div class="d-flex align-items-center mb-3">
+  <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; font-weight: bold;">
+    {{ video.creator.username|first|upper }}
+  </div>
+  <div class="ms-2">
+    <strong>{{ video.creator.username }}</strong>
+  </div>
+</div>
+
+<!-- 📺 Subscribe Button -->
+<form action="{% url 'toggle_subscription' video.id %}" method="POST" style="margin-bottom: 10px;">
+  {% csrf_token %}
+  <button type="submit" class="btn {% if is_subscribed %}btn-danger{% else %}btn-success{% endif %}">
+    {% if is_subscribed %}
+        🔔 Unsubscribe from {{ video.creator.username }}
+    {% else %}
+        📺 Subscribe to {{ video.creator.username }}
+    {% endif %}
+  </button>
+</form>
+
+<!-- ❤️ Like Button -->
+<form action="{% url 'like_video' video.id %}" method="POST" style="margin-bottom: 10px;">
+  {% csrf_token %}
+  <button type="submit">
+      {% if user in video.likes.all %}
+          ❤️ Unlike
+      {% else %}
+          🤍 Like
+      {% endif %}
+      ({{ video.total_likes }})
+  </button>
+</form>
+
+<p>{{ video.description }}</p>
+
+<hr>
+
+<!-- ✅ Comment form -->
+<h3>Leave a comment</h3>
+<form action="{% url 'user_comment' video.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Post Comment</button>
+</form>
+
+<hr>
+
+<!-- ✅ Display comments -->
+<h3>Comments</h3>
+{% for comment in comments %}
+  <div>
+    <strong>{{ comment.user.username }}</strong>
+    <small>on {{ comment.created_at|date:"d M Y H:i" }}</small>
+    <p>{{ comment.content }}</p>
+  </div>
+  <hr>
+{% empty %}
+  <p>No comments yet.</p>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,6 @@
+<div class="text-end mt-3">
+    <form method="POST" action="{% url 'user_logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>

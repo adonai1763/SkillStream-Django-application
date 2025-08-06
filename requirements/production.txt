@@ -1,0 +1,25 @@
+# Production requirements
+# Include base requirements plus production-specific packages
+
+-r base.txt
+
+# Production WSGI server
+gunicorn>=21.2.0
+
+# Caching
+redis>=4.6.0
+django-redis>=5.3.0
+
+# Cloud storage (AWS S3)
+boto3>=1.28.0
+django-storages>=1.13.0
+
+# Monitoring and logging
+sentry-sdk>=1.29.0
+
+# Performance monitoring
+django-silk>=5.0.0
+
+# Security enhancements
+django-csp>=3.7.0
+django-cors-headers>=4.2.0

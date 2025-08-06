@@ -1,0 +1,5 @@
+# Main requirements file - points to development by default
+# For production, use: pip install -r requirements/production.txt
+# For testing, use: pip install -r requirements/testing.txt
+
+-r requirements/development.txt
