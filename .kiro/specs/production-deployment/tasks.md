@@ -6,7 +6,7 @@
   - Configure database settings for PostgreSQL production deployment
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7_
 
-- [ ] 1.1 Create production settings file
+- [-] 1.1 Create production settings file
   - Create config/settings/production.py with production-specific configurations
   - Configure security headers, HTTPS settings, and secure cookie configurations
   - Set up database configuration with dj-database-url for Heroku PostgreSQL
