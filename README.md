@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SkillStream - Django Video Learning Platform
 
 A modern video learning platform built with Django that enables creators to upload educational content and learners to discover and engage with videos.
@@ -115,7 +114,7 @@ The application includes REST API endpoints:
 
 The application is configured for deployment on:
 - **Heroku** (with PostgreSQL)
-- **AWS** (Elastic Beanstalk + RDS)
+- **Render** (with PostgreSQL)
 - **DigitalOcean** (App Platform)
 
 Environment variables needed for production:
@@ -151,6 +150,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ⭐ **Star this repository if you found it helpful!**
-=======
-# SkillStream-Django-application
->>>>>>> 5fc83545a145f7257d98a972d83902abfcf1ec68
