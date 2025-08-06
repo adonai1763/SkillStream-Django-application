@@ -17,6 +17,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1',
+    'skillstream-django-application.onrender.com',  # Your specific Render URL
     '.onrender.com',  # Allow all Render.com subdomains
 ]
 
