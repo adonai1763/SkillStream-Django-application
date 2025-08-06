@@ -1,9 +1,9 @@
-# Production Dockerfile for SkillStream
 FROM python:3.9-slim
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
 
 # Set work directory
@@ -15,7 +15,6 @@ RUN apt-get update \
         postgresql-client \
         build-essential \
         libpq-dev \
-        nginx \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -26,7 +25,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Create necessary directories
-RUN mkdir -p /app/logs /app/staticfiles /var/log/skillstream
+RUN mkdir -p /app/staticfiles /app/media
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
@@ -37,7 +36,7 @@ RUN chown -R appuser:appuser /app
 USER appuser
 
 # Expose port
-EXPOSE 8000
+EXPOSE $PORT
 
-# Run gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "config.wsgi:application"]
+# Start command
+CMD python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
