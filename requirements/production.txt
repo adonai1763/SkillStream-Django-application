@@ -1,25 +1,27 @@
-# Production requirements
-# Include base requirements plus production-specific packages
+# Production requirements - standalone file for deployment
 
--r base.txt
+# Core Django
+Django<5.0,>=4.2
+Pillow>=10.0.0
+
+# Database
+psycopg2-binary>=2.9.0
+dj-database-url>=2.0.0
+
+# Static files
+whitenoise>=6.5.0
+
+# Environment variables
+python-decouple>=3.8
+
+# Timezone support
+pytz>=2023.3
+
+# HTTP library
+urllib3>=2.0.0
+
+# Cryptography
+cryptography>=41.0.0
 
 # Production WSGI server
 gunicorn>=21.2.0
-
-# Caching
-redis>=4.6.0
-django-redis>=5.3.0
-
-# Cloud storage (AWS S3)
-boto3>=1.28.0
-django-storages>=1.13.0
-
-# Monitoring and logging
-sentry-sdk>=1.29.0
-
-# Performance monitoring
-django-silk>=5.0.0
-
-# Security enhancements
-django-csp>=3.7.0
-django-cors-headers>=4.2.0

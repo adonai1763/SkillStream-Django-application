@@ -60,7 +60,7 @@
   - Set up Heroku CLI and authentication for deployment
   - _Requirements: 1.1, 1.4_
 
-- [-] 3.2 Add and configure Heroku addons
+- [x] 3.2 Add and configure Heroku addons
   - Add Heroku Postgres addon for production database
   - Add Heroku Redis addon for caching (optional but recommended)
   - Configure addon settings and connection parameters
@@ -78,7 +78,7 @@
   - Configure database backups and recovery procedures
   - _Requirements: 3.1, 3.6_
 
-- [ ] 4.1 Prepare database migration
+- [x] 4.1 Prepare database migration
   - Export existing data from SQLite development database
   - Create data fixtures for essential application data
   - Prepare migration scripts for PostgreSQL deployment
