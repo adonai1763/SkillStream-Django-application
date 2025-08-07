@@ -29,8 +29,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# Railway healthcheck routes
+# Healthcheck routes
 urlpatterns += [
     path('health/', lambda request: HttpResponse("OK")),
-    path('', lambda request: HttpResponse("OK")),  # <- ADD THIS LINE
 ]

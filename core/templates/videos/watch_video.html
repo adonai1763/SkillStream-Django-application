@@ -5,9 +5,12 @@
 
 
 <!-- 🎬 Video Player -->
-<video width="100%" height="auto" controls>
+<video width="100%" height="auto" controls preload="metadata">
   <source src="{{ video.video_file.url }}" type="video/mp4">
+  <source src="{{ video.video_file.url }}" type="video/webm">
+  <source src="{{ video.video_file.url }}" type="video/ogg">
   Your browser does not support the video tag.
+  <p>If the video doesn't play, <a href="{{ video.video_file.url }}" target="_blank">click here to download</a></p>
 </video>
 
 <!-- 👤 Creator Info -->
