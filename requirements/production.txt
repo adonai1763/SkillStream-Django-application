@@ -25,3 +25,7 @@ cryptography>=41.0.0
 
 # Production WSGI server
 gunicorn>=21.2.0
+
+# Cloud storage for media files
+cloudinary>=1.36.0
+django-cloudinary-storage>=0.3.0

@@ -6,6 +6,9 @@ This file contains settings specific to the production environment.
 
 import os
 from .base import *
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-production')
@@ -64,6 +67,24 @@ SECURE_HSTS_PRELOAD = True
 SECURE_SSL_REDIRECT = False  # Render handles this at the load balancer level
 SESSION_COOKIE_SECURE = False  # Set to True if you have HTTPS working
 CSRF_COOKIE_SECURE = False     # Set to True if you have HTTPS working
+
+# Cloudinary configuration for video storage
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'dlj95n6hw'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '221561824591952'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'mNL_KXBRKymAUFW4456QYJGaKKk'),
+}
+
+# Configure Cloudinary
+cloudinary.config(
+    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key=CLOUDINARY_STORAGE['API_KEY'],
+    api_secret=CLOUDINARY_STORAGE['API_SECRET'],
+    secure=True
+)
+
+# Use Cloudinary for media file storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Production logging - console only (Render captures this)
 LOGGING = {
