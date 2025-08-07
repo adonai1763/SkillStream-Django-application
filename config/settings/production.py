@@ -6,9 +6,10 @@ This file contains settings specific to the production environment.
 
 import os
 from .base import *
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+# Temporarily disable Cloudinary imports for debugging
+# import cloudinary
+# import cloudinary.uploader
+# import cloudinary.api
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-production')
@@ -69,49 +70,9 @@ SECURE_SSL_REDIRECT = False  # Render handles this at the load balancer level
 SESSION_COOKIE_SECURE = False  # Set to True if you have HTTPS working
 CSRF_COOKIE_SECURE = False     # Set to True if you have HTTPS working
 
-# Cloudinary configuration for video storage
-try:
-    # Use CLOUDINARY_URL if available (preferred method)
-    CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
-    if CLOUDINARY_URL:
-        # Parse the URL manually to avoid issues
-        import re
-        match = re.match(r'cloudinary://(\d+):([^@]+)@(.+)', CLOUDINARY_URL)
-        if match:
-            api_key, api_secret, cloud_name = match.groups()
-            cloudinary.config(
-                cloud_name=cloud_name,
-                api_key=api_key,
-                api_secret=api_secret,
-                secure=True
-            )
-        else:
-            raise ValueError("Invalid CLOUDINARY_URL format")
-    else:
-        # Fallback to individual environment variables
-        cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME')
-        api_key = os.environ.get('CLOUDINARY_API_KEY')
-        api_secret = os.environ.get('CLOUDINARY_API_SECRET')
-        
-        if not all([cloud_name, api_key, api_secret]):
-            raise ValueError("Missing Cloudinary credentials")
-            
-        cloudinary.config(
-            cloud_name=cloud_name,
-            api_key=api_key,
-            api_secret=api_secret,
-            secure=True
-        )
-        
-    print(f"Cloudinary configured successfully with cloud_name: {cloudinary.config().cloud_name}")
-    
-except Exception as e:
-    print(f"Cloudinary configuration error: {e}")
-    # Don't fail the entire app, just log the error
-    pass
-
-# Use Cloudinary for media file storage
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Temporarily disable Cloudinary to isolate the 500 error
+# TODO: Re-enable once basic app is working
+print("Cloudinary configuration temporarily disabled for debugging")
 
 # Production logging - console only (Render captures this)
 LOGGING = {
