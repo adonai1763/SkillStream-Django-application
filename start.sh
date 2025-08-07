@@ -3,11 +3,14 @@
 # Exit on any error
 set -e
 
+# Set default port if not provided
+PORT=${PORT:-8000}
+
 # Debug: Print environment variables
 echo "=== Environment Configuration ==="
 echo "DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-'Not set'}"
 echo "DEBUG: ${DEBUG:-'Not set'}"
-echo "PORT: ${PORT:-8000}"
+echo "PORT: $PORT"
 echo "DATABASE_URL: ${DATABASE_URL:+'Set'}"
 echo "=================================="
 
@@ -26,5 +29,5 @@ echo "Running database migrations..."
 python manage.py migrate
 
 # Start the application
-echo "Starting application..."
-gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 2 --timeout 120
+echo "Starting application on port $PORT..."
+exec gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
