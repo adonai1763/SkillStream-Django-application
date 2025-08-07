@@ -30,16 +30,13 @@ RUN mkdir -p /app/staticfiles /app/media
 # Make startup script executable (before switching users)
 RUN chmod +x /app/start.sh
 
-# Collect static files
-RUN python manage.py collectstatic --noinput
-
 # Create non-root user
 RUN adduser --disabled-password --gecos '' appuser
 RUN chown -R appuser:appuser /app
 USER appuser
 
-# Expose port
-EXPOSE $PORT
+# Expose the port
+EXPOSE 8000
 
-# Start command
-CMD ["/app/start.sh"]
+# Start the app using sh to avoid Ash/Bash incompatibilities
+CMD ["sh", "/app/start.sh"]
