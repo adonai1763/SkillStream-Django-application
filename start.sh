@@ -1,33 +1,34 @@
 #!/bin/sh
 
-# Exit on any error
+# Exit on error
 set -e
 
-# Set default port if not provided
-PORT=${PORT:-8000}
+# Use Railway-provided PORT or fallback
+if [ -z "$PORT" ]; then
+    PORT=8000
+fi
 
-# Debug: Print environment variables
-echo "=== Environment Configuration ==="
+# Debug
+echo "=== ENV ==="
+echo "PORT: $PORT"
 echo "DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-'Not set'}"
 echo "DEBUG: ${DEBUG:-'Not set'}"
-echo "PORT: $PORT"
-echo "DATABASE_URL: ${DATABASE_URL:+'Set'}"
-echo "=================================="
+echo "SECRET_KEY: ${SECRET_KEY:+Set}"
+echo "======================"
 
-# Validate required environment variables
+# Required
 if [ -z "$SECRET_KEY" ]; then
-    echo "ERROR: SECRET_KEY environment variable is required"
+    echo "ERROR: SECRET_KEY is missing"
     exit 1
 fi
 
-# Collect static files
-echo "Collecting static files..."
+# Migrations & Static
+echo "Collecting static..."
 python manage.py collectstatic --noinput
 
-# Run database migrations
-echo "Running database migrations..."
+echo "Migrating DB..."
 python manage.py migrate
 
-# Start the application
-echo "Starting application on port $PORT..."
+# Launch app
+echo "Starting Gunicorn..."
 exec gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120

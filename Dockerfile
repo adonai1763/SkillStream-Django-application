@@ -1,42 +1,40 @@
 FROM python:3.9-slim
 
-# Set environment variables
+# Env
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8000
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
 
-# Set work directory
+# Workdir
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        postgresql-client \
-        build-essential \
-        libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    postgresql-client \
+    build-essential \
+    libpq-dev \
+ && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Python deps
 COPY requirements/production.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project
+# Code
 COPY . /app/
 
-# Create necessary directories
+# Static dirs
 RUN mkdir -p /app/staticfiles /app/media
 
-# Make startup script executable (before switching users)
+# Make start.sh executable
 RUN chmod +x /app/start.sh
 
-# Create non-root user
+# Add non-root user
 RUN adduser --disabled-password --gecos '' appuser
 RUN chown -R appuser:appuser /app
 USER appuser
 
-# Expose the port
+# Expose Railway port (dynamic)
 EXPOSE 8000
 
-# Start the app using sh to avoid Ash/Bash incompatibilities
+# Launch via sh
 CMD ["sh", "/app/start.sh"]
