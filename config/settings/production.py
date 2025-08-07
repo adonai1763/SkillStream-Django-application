@@ -14,7 +14,8 @@ import cloudinary.api
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Temporarily enable DEBUG to see error details
+DEBUG = True
 
 # Allow deployment hosts - will be configured based on platform
 ALLOWED_HOSTS = [
