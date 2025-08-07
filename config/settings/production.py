@@ -69,19 +69,45 @@ SESSION_COOKIE_SECURE = False  # Set to True if you have HTTPS working
 CSRF_COOKIE_SECURE = False     # Set to True if you have HTTPS working
 
 # Cloudinary configuration for video storage
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'dlj95n6hw'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', '221561824591952'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'mNL_KXBRKymAUFW4456QYJGaKKk'),
-}
-
-# Configure Cloudinary
-cloudinary.config(
-    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
-    api_key=CLOUDINARY_STORAGE['API_KEY'],
-    api_secret=CLOUDINARY_STORAGE['API_SECRET'],
-    secure=True
-)
+try:
+    # Use CLOUDINARY_URL if available (preferred method)
+    CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
+    if CLOUDINARY_URL:
+        # Parse the URL manually to avoid issues
+        import re
+        match = re.match(r'cloudinary://(\d+):([^@]+)@(.+)', CLOUDINARY_URL)
+        if match:
+            api_key, api_secret, cloud_name = match.groups()
+            cloudinary.config(
+                cloud_name=cloud_name,
+                api_key=api_key,
+                api_secret=api_secret,
+                secure=True
+            )
+        else:
+            raise ValueError("Invalid CLOUDINARY_URL format")
+    else:
+        # Fallback to individual environment variables
+        cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME')
+        api_key = os.environ.get('CLOUDINARY_API_KEY')
+        api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+        
+        if not all([cloud_name, api_key, api_secret]):
+            raise ValueError("Missing Cloudinary credentials")
+            
+        cloudinary.config(
+            cloud_name=cloud_name,
+            api_key=api_key,
+            api_secret=api_secret,
+            secure=True
+        )
+        
+    print(f"Cloudinary configured successfully with cloud_name: {cloudinary.config().cloud_name}")
+    
+except Exception as e:
+    print(f"Cloudinary configuration error: {e}")
+    # Don't fail the entire app, just log the error
+    pass
 
 # Use Cloudinary for media file storage
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
