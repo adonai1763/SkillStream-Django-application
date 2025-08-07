@@ -112,16 +112,31 @@ The application includes REST API endpoints:
 
 ## 🚀 Deployment
 
-The application is configured for deployment on:
-- **Heroku** (with PostgreSQL)
-- **Render** (with PostgreSQL)
-- **DigitalOcean** (App Platform)
+**Ready for deployment!** Project size: 59MB (optimized)
 
-Environment variables needed for production:
-- `SECRET_KEY`
-- `DEBUG=False`
-- `DATABASE_URL`
-- `ALLOWED_HOSTS`
+### Recommended Free Hosting Platforms:
+
+1. **Railway** ⭐ (Recommended)
+   - Free tier: 500 hours/month, 1GB RAM
+   - Persistent storage (great for video uploads)
+   - Free PostgreSQL included
+   - Deploy: `python3 deploy.py` for instructions
+
+2. **Render**
+   - Free tier: 750 hours/month, 512MB RAM
+   - Ephemeral storage (files reset on deploy)
+   - PostgreSQL free for 90 days
+
+### Quick Deploy:
+```bash
+# Generate deployment instructions
+python3 deploy.py
+
+# Or just check readiness
+python3 deploy.py --check-only
+```
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
 
 ## 🤝 Contributing
 

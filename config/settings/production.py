@@ -13,25 +13,26 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-producti
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# Allow Railway and other deployment hosts
+# Allow deployment hosts - will be configured based on platform
 ALLOWED_HOSTS = [
     'localhost', 
     '127.0.0.1',
-    'skillstream-django-application-production.up.railway.app',  # Your Railway URL
-    '.up.railway.app',  # Allow all Railway subdomains
-    'skillstream-django-application.onrender.com',  # Your specific Render URL
-    '.onrender.com',  # Allow all Render.com subdomains
+    '.up.railway.app',  # Railway subdomains
+    '.onrender.com',    # Render subdomains
+    '.vercel.app',      # Vercel subdomains
+    '.herokuapp.com',   # Heroku subdomains
 ]
 
+# Add custom domain from environment variable if provided
+if os.environ.get('ALLOWED_HOST'):
+    ALLOWED_HOSTS.append(os.environ.get('ALLOWED_HOST'))
+
 # Database - Use PostgreSQL if available, fallback to SQLite
-try:
-    import dj_database_url
-except ImportError:
-    dj_database_url = None
+import dj_database_url
 
 # Try DATABASE_URL first (PostgreSQL), fallback to SQLite
 DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL and dj_database_url:
+if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
