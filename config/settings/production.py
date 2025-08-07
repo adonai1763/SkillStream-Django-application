@@ -15,8 +15,7 @@ from .base import *
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Temporarily enable DEBUG to see error details
-DEBUG = True
+DEBUG = False
 
 # Allow deployment hosts - will be configured based on platform
 ALLOWED_HOSTS = [
@@ -70,9 +69,10 @@ SECURE_SSL_REDIRECT = False  # Render handles this at the load balancer level
 SESSION_COOKIE_SECURE = False  # Set to True if you have HTTPS working
 CSRF_COOKIE_SECURE = False     # Set to True if you have HTTPS working
 
-# Temporarily disable Cloudinary to isolate the 500 error
-# TODO: Re-enable once basic app is working
-print("Cloudinary configuration temporarily disabled for debugging")
+# Local media storage for job application demo
+# Videos are stored locally which is sufficient for demonstration purposes
+# Note: Files will be reset on container restart, but this is acceptable for portfolio demos
+print("Using local media storage for job application demonstration")
 
 # Production logging - console only (Render captures this)
 LOGGING = {
